@@ -4,19 +4,32 @@ import { AntDesign } from '@expo/vector-icons';
 import React from 'react';
 import {
   Container,
-  CircleContainer,
+  // CircleContainer,
   // CircleView,
   CircleButton,
 } from "./components/styles";
 
 const CIRCLE_SIZE = 100;
+
 const Circle = ({ onPress, animatedValue }) => {
+  const inputRange = [0, 0.001, 0.5, 0.501, 1]
+  const containerBg = animatedValue.interpolate({
+    inputRange,
+    outputRange: ['gold', 'gold', 'gold', '#444', '#444']
+  })
+  const circleBg = animatedValue.interpolate({
+    inputRange,
+    outputRange: ['#444', '#444', '#444', 'gold', 'gold']
+  })
   return (
-    <CircleContainer>
+    <Animated.View style={[StyleSheet.absoluteFill, styles.CircleContainer, {
+      backgroundColor: containerBg
+    },]} >
       <Animated.View
         style={[
           styles.CircleView,
           {
+            backgroundColor: circleBg,
             transform: [
               {
                 perspective: 400,
@@ -36,9 +49,11 @@ const Circle = ({ onPress, animatedValue }) => {
               {
                 translateX: animatedValue.interpolate({
                   inputRange: [0, 0.5, 1],
-                  outputRange: ['0%', '50%', '0%'],
+                  outputRange: [0, 5, 0],
+                  // outputRange: ['0%', '50%', '0%'],
                 }),
               },
+
             ],
           },
         ]}
@@ -49,7 +64,7 @@ const Circle = ({ onPress, animatedValue }) => {
           </CircleButton>
         </TouchableOpacity>
       </Animated.View>
-    </CircleContainer>
+    </Animated.View>
   )
 }
 
@@ -78,12 +93,19 @@ export default function App() {
   );
 }
 
-// 4:59
 const styles = StyleSheet.create({
   CircleView: {
     backgroundColor: '#444',
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,
+  },
+  CircleContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: 8,
+    paddingBottom: 100,
+    backgroundColor: '#ffd700',
   }
 })

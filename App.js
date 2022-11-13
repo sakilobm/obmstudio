@@ -8,18 +8,22 @@ import {
   // CircleView,
   CircleButton,
 } from "./components/styles";
-
+import { LinearGradient } from 'expo-linear-gradient';
+import colors from './assets/colors/color'
 const CIRCLE_SIZE = 100;
+
+const onBoard1 = ['#2B8FE3']
+const onBoard2 = ['#EA3690']
 
 const Circle = ({ onPress, animatedValue }) => {
   const inputRange = [0, 0.001, 0.5, 0.501, 1]
   const containerBg = animatedValue.interpolate({
     inputRange,
-    outputRange: ['gold', 'gold', 'gold', '#444', '#444']
+    outputRange: ['#2B8FE3', '#2B8FE3', '#2B8FE3', '#EA3690', '#EA3690']
   })
   const circleBg = animatedValue.interpolate({
     inputRange,
-    outputRange: ['#444', '#444', '#444', 'gold', 'gold']
+    outputRange: ['#EA3690', '#EA3690', '#EA3690', '#2B8FE3', '#2B8FE3']
   })
   return (
     <Animated.View style={[StyleSheet.absoluteFill, styles.CircleContainer, {
@@ -95,7 +99,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   CircleView: {
-    backgroundColor: '#444',
+    // backgroundColor: colors.screenTwo,
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
     borderRadius: CIRCLE_SIZE / 2,
@@ -106,6 +110,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     paddingBottom: 100,
-    backgroundColor: '#ffd700',
+    // backgroundColor: colors.screenOne,
   }
 })

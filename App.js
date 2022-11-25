@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useCallback} from 'react';
 import {
   StatusBar,
   Dimensions,
@@ -6,13 +7,21 @@ import {
   Animated,
   Text,
   View,
+  Image,
   StyleSheet,
+  ImageBackground,
 } from 'react-native';
+// Rest of the import statements
+import {useFonts} from 'expo-font';
 import Constants from 'expo-constants';
-import { AntDesign } from '@expo/vector-icons';
-const { width } = Dimensions.get('window');
+import {AntDesign} from '@expo/vector-icons';
+import * as SplashScreen from 'expo-splash-screen';
+import {LinearGradient} from 'expo-linear-gradient';
+import Circle from './components/Circle';
+import Onboard from './components/Onboard';
+const {width} = Dimensions.get('window');
 
-const AnimatedAntDesign = Animated.createAnimatedComponent(AntDesign);
+// const AnimatedAntDesign = Animated.createAnimatedComponent(AntDesign);
 
 const DURATION = 1000;
 const TEXT_DURATION = DURATION * 0.8;
@@ -20,146 +29,74 @@ const TEXT_DURATION = DURATION * 0.8;
 const quotes = [
   {
     quote:
-      'For the things we have to learn before we can do them, we learn by doing them.',
-    author: 'Aristotle, The Nicomachean Ethics',
+      'If life were predictable it would cease to be life, and be without flavor.',
+    author: 'Eleanor Roosevelt',
+    author: 'Author sakil',
+    src: require('./assets/images/Frame.png'),
+    width: 100,
+    height: 100,
   },
   {
     quote: 'The fastest way to build an app.',
     author: 'The Expo Team',
+    src: require('./assets/images/1-Small.png'),
+    width: 100,
+    height: 100,
   },
   {
     quote:
       'The greatest glory in living lies not in never falling, but in rising every time we fall.',
     author: 'Nelson Mandela',
+    src: require('./assets/images/2.png'),
+    width: 100,
+    height: 100,
   },
   {
     quote: 'The way to get started is to quit talking and begin doing.',
     author: 'Walt Disney',
+    src: require('./assets/images/3.png'),
+    width: 100,
+    height: 100,
   },
   {
     quote:
       "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.",
     author: 'Steve Jobs',
+    src: require('./assets/images/4.png'),
+    width: 100,
+    height: 100,
   },
   {
-    quote:
-      'If life were predictable it would cease to be life, and be without flavor.',
-    author: 'Eleanor Roosevelt',
+    quote: 'WELCOME',
+    author: 'SakilSowbharath',
+    src: require('./assets/images/2.png'),
+    width: 100,
+    height: 100,
   },
   {
     quote:
       "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.",
     author: 'Oprah Winfrey',
+    src: require('./assets/images/3.png'),
+    width: 100,
+    height: 100,
   },
   {
     quote:
       "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.",
     author: 'James Cameron',
+    src: require('./assets/images/4.png'),
+    width: 100,
+    height: 100,
   },
   {
     quote: "Life is what happens when you're busy making other plans.",
     author: 'John Lennon',
+    src: require('./assets/images/1.png'),
+    width: 100,
+    height: 100,
   },
 ];
-
-const Circle = ({ onPress, index, quotes, animatedValue, animatedValue2 }) => {
-  const { initialBgColor, nextBgColor, bgColor } = colors[index];
-  const inputRange = [0, 0.001, 0.5, 0.501, 1];
-  const backgroundColor = animatedValue2.interpolate({
-    inputRange,
-    outputRange: [
-      initialBgColor,
-      initialBgColor,
-      initialBgColor,
-      bgColor,
-      bgColor,
-    ],
-  });
-  const dotBgColor = animatedValue2.interpolate({
-    inputRange: [0, 0.001, 0.5, 0.501, 0.9, 1],
-    outputRange: [
-      bgColor,
-      bgColor,
-      bgColor,
-      initialBgColor,
-      initialBgColor,
-      nextBgColor,
-    ],
-  });
-
-  return (
-    <Animated.View
-      style={[
-        StyleSheet.absoluteFillObject,
-        styles.container,
-        { backgroundColor },
-      ]}
-    >
-      <Animated.View
-        style={[
-          styles.circle,
-          {
-            backgroundColor: dotBgColor,
-            transform: [
-              { perspective: 200 },
-              {
-                rotateY: animatedValue2.interpolate({
-                  inputRange: [0, 0.5, 1],
-                  outputRange: ['0deg', '-90deg', '-180deg'],
-                }),
-              },
-
-              {
-                scale: animatedValue2.interpolate({
-                  inputRange: [0, 0.5, 1],
-                  outputRange: [1, 6, 1],
-                }),
-              },
-
-              {
-                translateX: animatedValue2.interpolate({
-                  inputRange: [0, 0.5, 1],
-                  outputRange: [1, 6, 1],
-                }),
-              },
-            ],
-          },
-        ]}
-      >
-        <TouchableOpacity onPress={onPress}>
-          <Animated.View
-            style={[
-              styles.button,
-              {
-                transform: [
-                  {
-                    scale: animatedValue.interpolate({
-                      inputRange: [0, 0.05, 0.5, 1],
-                      outputRange: [1, 0, 0, 1],
-                      // extrapolate: "clamp"
-                    }),
-                  },
-                  {
-                    rotateY: animatedValue.interpolate({
-                      inputRange: [0, 0.5, 0.9, 1],
-                      outputRange: ['0deg', '180deg', '180deg', '180deg'],
-                    }),
-                  },
-                ],
-                opacity: animatedValue.interpolate({
-                  inputRange: [0, 0.05, 0.9, 1],
-                  outputRange: [1, 0, 0, 1],
-                }),
-              },
-            ]}
-          >
-            <AnimatedAntDesign name='arrowright' size={28} color={'white'} />
-          </Animated.View>
-        </TouchableOpacity>
-      </Animated.View>
-    </Animated.View>
-  );
-};
 
 /* 
 initialBgColor -> Big background of the element
@@ -203,6 +140,10 @@ const colors = [
 ];
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Menlo: require('./assets/fonts/DMSans-Medium.ttf'),
+    RubikMonoOne: require('./assets/fonts/RubikMonoOne-Regular.ttf'),
+  });
   const animatedValue = React.useRef(new Animated.Value(0)).current;
   const animatedValue2 = React.useRef(new Animated.Value(0)).current;
   const sliderAnimatedValue = React.useRef(new Animated.Value(0)).current;
@@ -234,10 +175,22 @@ export default function App() {
     animate((index + 1) % colors.length).start();
     setIndex((index + 1) % colors.length);
   };
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
-    <View style={{ flex: 1, justifyContent: 'flex-start', paddingTop: 100 }}>
-      <StatusBar hidden />
+    // Main Screen Rendered Here
+    <View
+      style={{flex: 1, justifyContent: 'flex-start', paddingTop: 100}}
+      onLayout={onLayoutRootView}>
+      {/* <StatusBar hidden /> */}
       <Circle
         index={index}
         onPress={onPress}
@@ -258,20 +211,17 @@ export default function App() {
           ],
           opacity: sliderAnimatedValue.interpolate({
             inputRange: [...Array(quotes.length * 2 + 1).keys()].map(
-              (i) => i / 2
+              (i) => i / 2,
             ),
             outputRange: [...Array(quotes.length * 2 + 1).keys()].map((i) =>
-              i % 2 === 0 ? 1 : 0
+              i % 2 === 0 ? 1 : 0,
             ),
           }),
-        }}
-      >
-        {quotes.slice(0, colors.length).map(({ quote, author }, i) => {
+        }}>
+        {quotes.slice(0, colors.length).map(({quote, author, src}, i) => {
           return (
-            <View style={{ paddingRight: width, width: width * 2 }} key={i}>
-              <Text
-                style={[styles.paragraph, { color: colors[i].nextBgColor }]}
-              >
+            <View style={{paddingRight: width, width: width * 2}} key={i}>
+              <Text style={[styles.paragraph, {color: colors[i].nextBgColor}]}>
                 {quote}
               </Text>
               <Text
@@ -284,10 +234,14 @@ export default function App() {
                     textAlign: 'right',
                     opacity: 0.8,
                   },
-                ]}
-              >
+                ]}>
                 ______ {author}
               </Text>
+              <View>
+                <ImageBackground
+                  style={[styles.onboard]}
+                  source={src}></ImageBackground>
+              </View>
             </View>
           );
         })}
@@ -314,16 +268,23 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   button: {
-    height: 100,
-    width: 100,
+    height: 80,
+    width: 80,
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  circle: {
-    backgroundColor: 'turquoise',
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+  onboard: {
+    position: 'absolute',
+    top: '80%',
+    left: '8%',
+    width: 210,
+    height: 180,
   },
+  // circle: {
+  //     backgroundColor: 'turquoise',
+  //     width: 80,
+  //     height: 80,
+  //     borderRadius: 50,
+  // },
 });

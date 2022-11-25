@@ -1,0 +1,26 @@
+{
+  "FigmaTexts": {
+    "price": {
+      "fontFamily": "Raleway",
+      "fontWeight": "Bold",
+      "fontSize": 17
+    },
+    "titleH2": {
+      "fontFamily": "Raleway",
+      "fontWeight": "SemiBold",
+      "fontSize": 28
+    },
+    "titleH1": {
+      "fontFamily": "Raleway",
+      "fontWeight": "Bold",
+      "fontSize": 34
+    }
+  },
+  "FigmaColors": {
+    "white": "#FFFFFFFF",
+    "darkSecondary": "#858585FF",
+    "primary": "#5956E9FF",
+    "gray1": "#333333FF",
+    "gray6": "#F2F2F2FF"
+  }
+}

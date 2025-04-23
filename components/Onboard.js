@@ -28,5 +28,4 @@ const theme = createTheme({
   }
 });
 
-export type Theme = typeof theme;
 export default theme;

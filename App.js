@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback} from 'react';
+import { useCallback } from 'react';
 import {
   StatusBar,
   Dimensions,
@@ -12,14 +12,14 @@ import {
   ImageBackground,
 } from 'react-native';
 // Rest of the import statements
-import {useFonts} from 'expo-font';
+import { useFonts } from 'expo-font';
 import Constants from 'expo-constants';
-import {AntDesign} from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
-import {LinearGradient} from 'expo-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import Circle from './components/Circle';
-import Onboard from './components/Onboard';
-const {width} = Dimensions.get('window');
+// import Onboard from './components/Onboard';
+const { width } = Dimensions.get('window');
 
 // const AnimatedAntDesign = Animated.createAnimatedComponent(AntDesign);
 
@@ -188,7 +188,7 @@ export default function App() {
   return (
     // Main Screen Rendered Here
     <View
-      style={{flex: 1, justifyContent: 'flex-start', paddingTop: 100}}
+      style={{ flex: 1, justifyContent: 'flex-start', paddingTop: 100 }}
       onLayout={onLayoutRootView}>
       {/* <StatusBar hidden /> */}
       <Circle
@@ -218,10 +218,10 @@ export default function App() {
             ),
           }),
         }}>
-        {quotes.slice(0, colors.length).map(({quote, author, src}, i) => {
+        {quotes.slice(0, colors.length).map(({ quote, author, src }, i) => {
           return (
-            <View style={{paddingRight: width, width: width * 2}} key={i}>
-              <Text style={[styles.paragraph, {color: colors[i].nextBgColor}]}>
+            <View style={{ paddingRight: width, width: width * 2 }} key={i}>
+              <Text style={[styles.paragraph, { color: colors[i].nextBgColor }]}>
                 {quote}
               </Text>
               <Text
